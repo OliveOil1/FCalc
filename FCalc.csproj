@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="PluginBase">
+      <HintPath>..\FLauncher\PluginBase\bin\Release\netcoreapp3.1\PluginBase.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
