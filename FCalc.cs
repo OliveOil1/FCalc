@@ -12,25 +12,41 @@ namespace FCalc
 
         public string name => "FCalc";
 
-        public string description => "A calculator built into FLauncher";
+        public string description => "An advanced calculator built into FLauncher";
+
+        string[] prefixes = { "calc/", "="};
 
         public bool CommandEntered(string text_entered, string parameter)
         {
             bool inputHandled = false;
-            if (text_entered.ToLower().StartsWith("calc/"))
+            DataTable dataTable = new DataTable();
+
+            try
             {
-                var expression = text_entered.Remove(0,5);
-                DataTable dataTable = new DataTable();
-                try
-                {
-                    var answer = dataTable.Compute(expression, "");
-                    MessageBox((IntPtr)0, answer.ToString(), "FCalc", 0);
-                }
-                catch(Exception ex)
-                {
-                    MessageBox((IntPtr)0, ex.Message, "FCalc Exception Encountered", 0);
-                }
+                var answer = dataTable.Compute(text_entered, "");
+                MessageBox((IntPtr)0, answer.ToString(), "FCalc", 0);
                 inputHandled = true;
+            }
+            catch
+            {
+                foreach (string prefix in prefixes)
+                {
+                    if (text_entered.ToLower().StartsWith(prefix))
+                    {
+                        var expression = text_entered.Remove(0, prefix.Length);
+                        try
+                        {
+                            var answer = dataTable.Compute(expression, "");
+                            MessageBox((IntPtr)0, answer.ToString(), "FCalc", 0);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox((IntPtr)0, ex.Message, "FCalc Exception Encountered", 0);
+                        }
+                        inputHandled = true;
+                        break;
+                    }
+                }
             }
 
             return inputHandled;
